@@ -1,0 +1,34 @@
+@mixin flex($dir: row, $wrp: wrap, $jc: center, $ai: center, $ac: center) {
+    display: flex;
+    flex-direction: $dir;
+    flex-wrap: $wrp;
+    justify-content: $jc;
+    align-items: $ai;
+    align-content: $ac;
+}
+@mixin container($ancho: 90%, $limitado: true) {
+    width: $ancho;
+    margin: 0 auto;
+    @if $limitado {
+        max-width: 2732px;
+    }
+}
+@mixin imagen ($imagen: false, $medida: cover, $posicion: center, $repeat: no-repeat) {
+    @if  $imagen {
+        background-image: url($imagen);
+    }
+    background-size: $medida;
+    background-position: $posicion;
+    background-repeat: $repeat;
+}
+
+
+@mixin pantalla {
+    @media only screen and (max-width: 1024px){@content;}
+}
+@mixin tableta {
+    @media only screen and (max-width: 768px){@content;}
+}
+@mixin celular {
+    @media only screen and (max-width: 480px){@content;}
+}
