@@ -1,0 +1,33 @@
+@import '../../../resources/scss/vars';
+@import '../../../resources/scss/mixins';
+
+.loader{
+    @include flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $blanco;
+    text-align: center;
+    user-select: none;
+    overflow: hidden;
+    z-index: $zloader;
+    transition: ease all .5s .5s;
+    &.entering, &.entered{
+        left: 0;
+    }
+    &.exited, &.exiting{
+        left: -100%;
+    }
+    .myName{
+        display: inline-block;
+        color: $primario;
+        font-size: 25px;
+        font-weight: 600;
+        text-align: center;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        transition: ease all .5s;
+    }
+}
