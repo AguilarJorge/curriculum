@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Loader from './frontend/components/Loader/Loader';
 import Header from './frontend/components/Header/Header';
+import Footer from './frontend/components/Footer/Footer';
 
 function App() {
   const [showName, setShowName] = useState(false);
@@ -31,14 +32,17 @@ function App() {
       <div className="background"></div>
       <section className="mainContent">
         <Router>
-        <Header />
-          <Switch>
-            <Route exact path="/"><Home /></Route>
-            <Route path="/portafolio"><Work /></Route>
-            <Route path="/about"><About /></Route>
-            <Route path="/contacto"><Contact /></Route>
-          </Switch>
-      </Router>
+          <Header />
+            <section className="routeView">
+              <Switch>
+                <Route exact path="/"><Home /></Route>
+                <Route path="/portafolio"><Work /></Route>
+                <Route path="/about"><About /></Route>
+                <Route path="/contacto"><Contact /></Route>
+              </Switch>
+            </section>
+        </Router>
+        <Footer />
       </section>
     </section>
   );

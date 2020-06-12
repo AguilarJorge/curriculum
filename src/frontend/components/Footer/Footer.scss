@@ -1,0 +1,19 @@
+@import '../../../resources/scss/vars';
+@import '../../../resources/scss/mixins';
+
+.footer{
+    width: 100%;
+    margin: 0 auto;
+    .container{
+        @include container;
+        @include flex(row, $jc: space-between);
+        padding: 20px 0;
+        .socials{
+            @include flex(row, wrap, flex-start)
+        }
+        p{
+            color: $blanco;
+            font-size: 16px;
+        }
+    }
+}

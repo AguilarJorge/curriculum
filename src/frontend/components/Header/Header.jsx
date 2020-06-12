@@ -14,10 +14,10 @@ function Header() {
     useEffect(() => {
         if (location.pathname === '/') {
             setEstilo({width: 0})
-            setIsHome(true)
+            setIsHome(true);
         } else {
+            setIsHome(false);
             let links = document.querySelectorAll('.link');
-            setIsHome(false)
             links.forEach(link => {
                 if (link.pathname === location.pathname) {
                     setEstilo({
@@ -29,11 +29,26 @@ function Header() {
         }
     }, [location])
 
-    const handleClick = e => {
+    const animImdicator = e => {
         setEstilo({
             width: e.currentTarget.getBoundingClientRect().width,
-            left: e.offsetLeft
+            left: e.currentTarget.offsetLeft
         })
+    }
+    const activeLink = () => {
+        if (location.pathname === '/') {
+            setEstilo({width: 0})
+        } else {
+            let links = document.querySelectorAll('.link');
+            links.forEach(link => {
+                if (link.pathname === location.pathname) {
+                    setEstilo({
+                        width: link.getBoundingClientRect().width,
+                        left: link.offsetLeft
+                    })
+                }
+            });
+        }
     }
     const toHome = () => {
         if (isHome) return false;
@@ -43,11 +58,11 @@ function Header() {
     return (
         <header className="mainHeader">
             <div className="container">
-                <h2 className={isHome ? "logo home" : "logo"} onClick={toHome}></h2>
-                <nav className="links">
-                    <Link ref={refPortafolio} onClick={handleClick} to="/portafolio" className="link">Portafolio</Link>
-                    <Link ref={refAbout} onClick={handleClick} to="/about" className="link">Sobre Mi</Link>
-                    <Link ref={refContacto} onClick={handleClick} to="/contacto" className="link">Contacto</Link>
+                <div className={isHome ? "logo home" : "logo"} onClick={toHome}></div>
+                <nav className="links" onMouseLeave={activeLink}>
+                    <Link ref={refPortafolio} onMouseEnter={animImdicator} to="/portafolio" className="link">Portafolio</Link>
+                    <Link ref={refAbout} onMouseEnter={animImdicator} to="/about" className="link">Sobre Mi</Link>
+                    <Link ref={refContacto} onMouseEnter={animImdicator} to="/contacto" className="link">Contacto</Link>
                     <span className="currentIndicator" style={estilo}></span>
                 </nav>
             </div>
