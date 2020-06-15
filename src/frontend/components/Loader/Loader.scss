@@ -5,7 +5,7 @@
     @include flex;
     position: fixed;
     top: 0;
-    left: 0;
+    left: 100%;
     width: 100%;
     height: 100%;
     background-color: $blanco;
@@ -13,12 +13,25 @@
     user-select: none;
     overflow: hidden;
     z-index: $zloader;
-    transition: ease all .5s .5s;
+    transition: ease all .5s;
+    &.firsTime{
+        transition-delay: .5s;
+        &.exited, &.exiting{
+            left: -100%;
+        }
+    }
     &.entering, &.entered{
+        top: 0;
         left: 0;
     }
-    &.exited, &.exiting{
-        left: -100%;
+    &:not(.firsTime){
+        &.exiting{
+            left: -100%;
+        }
+        &.exited{
+            left: 100%;
+            transition: none;
+        }
     }
     .myName{
         display: inline-block;

@@ -3,14 +3,14 @@ import { Transition } from 'react-transition-group';
 import './Loader.css';
 
 function Loader(props) {
-  const {visible, css} = props;
+  const {firstTime, visible, css} = props;
   const loaderRef = useRef(null);
 
   return (
-    <Transition nodeRef={loaderRef} unmountOnExit in={visible} timeout={1000}>
+    <Transition nodeRef={loaderRef} in={visible} timeout={firstTime ? 1000 : 500}>
       {animState => {
         return (
-          <div ref={loaderRef} className={"loader " + animState}>
+          <div ref={loaderRef} className={`loader ${animState} ${(firstTime ? 'firsTime':'')}`}>
             <p className="myName" style={css}>Jorge Aguilar</p>
           </div>
         )

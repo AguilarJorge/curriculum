@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import './Header.css';
 
-function Header() {
+function Header(props) {
+    const {showLoader} = props;
+
     const [estilo, setEstilo] = useState({});
     const [isHome, setIsHome] = useState(true);
     const refPortafolio = useRef(null);
@@ -60,9 +62,9 @@ function Header() {
             <div className="container">
                 <div className={isHome ? "logo home" : "logo"} onClick={toHome}></div>
                 <nav className="links" onMouseLeave={activeLink}>
-                    <Link ref={refPortafolio} onMouseEnter={animImdicator} to="/portafolio" className="link">Portafolio</Link>
-                    <Link ref={refAbout} onMouseEnter={animImdicator} to="/about" className="link">Sobre Mi</Link>
-                    <Link ref={refContacto} onMouseEnter={animImdicator} to="/contacto" className="link">Contacto</Link>
+                    <Link ref={refPortafolio} onMouseEnter={animImdicator} onClick={showLoader} to="/portafolio" className="link">Portafolio</Link>
+                    <Link ref={refAbout} onMouseEnter={animImdicator} onClick={showLoader} to="/about" className="link">Sobre Mi</Link>
+                    <Link ref={refContacto} onMouseEnter={animImdicator} onClick={showLoader} to="/contacto" className="link">Contacto</Link>
                     <span className="currentIndicator" style={estilo}></span>
                 </nav>
             </div>

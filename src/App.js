@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Loader from './frontend/components/Loader/Loader';
@@ -8,8 +8,16 @@ import Footer from './frontend/components/Footer/Footer';
 function App() {
   const [showName, setShowName] = useState(false);
   const [loader, setLoader] = useState(true);
-
+  const [firstLoaderTime, setFirstLoaderTime] = useState(true);
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const [footerHeight, setFooterHeight] = useState(0);
+  const headerRef = useRef(null);
+  const footerRef = useRef(null);
+  
   useEffect(() => {
+    setHeaderHeight(headerRef.current.getBoundingClientRect().height);
+    setFooterHeight(footerRef.current.getBoundingClientRect().height);
+    
     setTimeout(function(){
       setShowName(true)
     }, 1000)
@@ -17,8 +25,8 @@ function App() {
       setShowName(false)
       setLoader(false)
     }, 3000)
-  }, []);
-
+  }, [headerHeight, footerHeight]);
+  
   const dynamicStyle = {
     loader: {
       opacity: showName ? 1 : 0,
@@ -26,23 +34,36 @@ function App() {
     }
   }
   
+  const handleShowLoader = e => {
+    setFirstLoaderTime(false)
+    setLoader(true)
+    setTimeout(() => {
+      setLoader(false)
+    }, 500);
+  }
+  
+  
   return (
     <section className="mainScreen">
-      <Loader visible={loader} css={dynamicStyle.loader}/>
+      <Loader firstTime={firstLoaderTime} visible={loader} css={dynamicStyle.loader}/>
       <div className="background"></div>
       <section className="mainContent">
         <Router>
-          <Header />
-            <section className="routeView">
-              <Switch>
-                <Route exact path="/"><Home /></Route>
-                <Route path="/portafolio"><Work /></Route>
-                <Route path="/about"><About /></Route>
-                <Route path="/contacto"><Contact /></Route>
-              </Switch>
-            </section>
+          <div ref={headerRef}>
+            <Header showLoader={handleShowLoader}/>
+          </div>
+          <section className="routeView" style={{height: `calc(100vh - (${headerHeight + footerHeight}px))`}}>
+            <Switch>
+              <Route exact path="/"><Home /></Route>
+              <Route path="/portafolio"><Work /></Route>
+              <Route path="/about"><About /></Route>
+              <Route path="/contacto"><Contact /></Route>
+            </Switch>
+          </section>
         </Router>
-        <Footer />
+        <div ref={footerRef}>
+          <Footer />
+        </div>
       </section>
     </section>
   );
