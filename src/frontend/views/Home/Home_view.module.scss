@@ -1,0 +1,44 @@
+@import '../../../resources/scss/vars';
+@import '../../../resources/scss/mixins';
+
+.viewSection{
+    @include flex;
+    width: 100%;
+    margin: 0 auto;
+    .container{
+        @include container;
+        @include flex;
+        padding: 20px 0;
+        position: relative;
+        perspective: 500px;
+        .colorBox{
+            width: 500px;
+            height: 350px;
+            margin-right: 300px;
+            background-color: $secundario;
+            opacity: .5;
+            transform: rotateY(10deg);
+            transition: ease all .3s;
+        }
+        .txt{
+            position: absolute;
+            color: $blanco;
+            .im{
+                font-size: 45px;
+                text-align: left;
+                span{
+                    text-decoration: underline wavy salmon;
+                }
+            }
+            .lov{
+                @include flex($jc: flex-end);
+                font-size: 14px;
+                letter-spacing: 3px;
+                text-transform: uppercase;
+                b{
+                    color: salmon;
+                }
+            }
+        }
+    }
+}

@@ -54,17 +54,18 @@ function Header(props) {
     }
     const toHome = () => {
         if (isHome) return false;
+        showLoader();
         history.push('/');
     }
     
     return (
         <header className="mainHeader">
             <div className="container">
-                <div className={isHome ? "logo home" : "logo"} onClick={toHome}></div>
+                <div className={isHome ? "logo home" : "logo isClickable"} onClick={toHome}></div>
                 <nav className="links" onMouseLeave={activeLink}>
-                    <Link ref={refPortafolio} onMouseEnter={animImdicator} onClick={showLoader} to="/portafolio" className="link">Portafolio</Link>
-                    <Link ref={refAbout} onMouseEnter={animImdicator} onClick={showLoader} to="/about" className="link">Sobre Mi</Link>
-                    <Link ref={refContacto} onMouseEnter={animImdicator} onClick={showLoader} to="/contacto" className="link">Contacto</Link>
+                    <Link ref={refPortafolio} onMouseEnter={animImdicator} onClick={showLoader} to="/portafolio" className="link isClickable">Portafolio</Link>
+                    <Link ref={refAbout} onMouseEnter={animImdicator} onClick={showLoader} to="/about" className="link isClickable">Sobre Mi</Link>
+                    <Link ref={refContacto} onMouseEnter={animImdicator} onClick={showLoader} to="/contacto" className="link isClickable">Contacto</Link>
                     <span className="currentIndicator" style={estilo}></span>
                 </nav>
             </div>

@@ -5,6 +5,8 @@ body {
   font: 18px/normal 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: none !important;
+  user-select: none;
 }
 
 body * {
@@ -13,4 +15,5 @@ body * {
   text-decoration: none;
   list-style-type: none;
   box-sizing: border-box;
+  cursor: none !important;
 }
