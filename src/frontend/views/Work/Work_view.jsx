@@ -5,18 +5,15 @@ require('dotenv').config();
 function WorkView() {
     const [data, setData] = useState({});
 
-    console.log(`${process.env.API_URL}/trabajos`);
-    const getData = async () => {
-        const result = await fetch(`${process.env.API_URL}/trabajos`);
-        const datos = await result.json();
-        
-        setData(datos);
-    }
-
     useEffect(() => {
-        // getData();
+        async function getData(){
+            const result = await fetch('/api/curriculum/v1/data/trabajos');
+            const datos = await result.json();
+            setData(datos);
+        }
+        getData();        
     }, [])
-    // console.log(data);
+    
 
     return (
         <motion.section
@@ -25,7 +22,7 @@ function WorkView() {
             exit="exit"
             variants={{ exit: { transition: { staggerChildren: 0.1 } } }}
         >
-            <h2>Work</h2>
+            <h2>{JSON.stringify(data)}</h2>
         </motion.section>
     );
   }
