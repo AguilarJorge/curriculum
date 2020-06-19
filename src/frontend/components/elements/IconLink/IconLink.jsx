@@ -5,7 +5,7 @@ function IconLink(props) {
     const {url, image} = props;
     return (
         <li className={css['link']}>
-            <a className={css['icon']} href={url} target="_blank" rel="noopener noreferrer" style={{backgroundImage: `url(${image})`}}> </a>
+            <a className={css['icon'] + ' isExternaLink'} href={url} target="_blank" rel="noopener noreferrer" style={{backgroundImage: `url(${image})`}}> </a>
         </li>
     )
 }

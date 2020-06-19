@@ -18,11 +18,11 @@
             background-color: $secundario;
             opacity: .5;
             transform: rotateY(10deg);
-            transition: ease all .3s;
         }
         .txt{
             position: absolute;
             color: $blanco;
+            text-align: right;
             .im{
                 font-size: 45px;
                 text-align: left;
@@ -31,7 +31,7 @@
                 }
             }
             .lov{
-                @include flex($jc: flex-end);
+                display: inline-block;
                 font-size: 14px;
                 letter-spacing: 3px;
                 text-transform: uppercase;

@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+
 import './App.css';
 
 //Views
 import HomeView from './frontend/views/Home/Home_view';
+import WorkView from './frontend/views/Work/Work_view';
 //Components
 import Loader from './frontend/components/Loader/Loader';
 import Header from './frontend/components/Header/Header';
@@ -18,6 +21,7 @@ function App() {
   const [headerHeight, setHeaderHeight] = useState(0);
   const [footerHeight, setFooterHeight] = useState(0);
   const [posicion, setPosicion] = useState({});
+  const [hoverType, setHoverType] = useState('');
   const headerRef = useRef(null);
   const footerRef = useRef(null);
   const dynamicStyle = {
@@ -31,6 +35,15 @@ function App() {
   }
   
   useEffect(() => {
+    document.onmouseover = e => {
+      if (e.target.classList.contains('isClickable')) {
+        setHoverType('hoverClickable')
+      } else if (e.target.classList.contains('isExternaLink')) {
+        setHoverType('hoverExternaLink');
+      } else {
+        setHoverType('');
+      }
+    }
     setHeaderHeight(headerRef.current.getBoundingClientRect().height);
     setFooterHeight(footerRef.current.getBoundingClientRect().height);
     
@@ -43,7 +56,6 @@ function App() {
     }, 3000)
   }, [headerHeight, footerHeight]);
   
-  
   const handleShowLoader = e => {
     setFirstLoaderTime(false)
     setLoader(true)
@@ -54,16 +66,10 @@ function App() {
   const getPosicion = e => {
     setPosicion({posX: e.clientX, posY: e.clientY})
   }
-  //Global handlers
-  const [clickable, setClickable] = useState(false);
-  document.onmouseover = e => {
-    e.target.classList.contains('isClickable') ? setClickable(true) : setClickable(false);
-  }
-  
   
   return (
     <section className="mainScreen" onMouseMove={getPosicion}>
-      <Loader firstTime={firstLoaderTime} visible={loader} css={dynamicStyle.loader}/>
+      <Loader firstTime={firstLoaderTime} visible={loader} css={dynamicStyle.loader} texto="Jorge Aguilar"/>
       <div className="background"></div>
       <section className="mainContent">
         <Router>
@@ -71,28 +77,34 @@ function App() {
             <Header showLoader={handleShowLoader}/>
           </div>
           <section className="routeView" style={dynamicStyle.section}>
-            <Switch>
-              <Route exact path="/"><HomeView altura={dynamicStyle.section.height}/></Route>
-              <Route path="/portafolio"><Work /></Route>
-              <Route path="/about"><About /></Route>
-              <Route path="/contacto"><Contact /></Route>
-            </Switch>
+            <Route render={({location}) => {
+              return (
+                <AnimatePresence exitBeforeEnter initial={false}>
+                  <Switch location={location} key={location.pathname}>
+                    <Route exact path="/"><HomeView altura={dynamicStyle.section.height} nombre="Jorge" puesto="Front-end Developer"/></Route>
+                    <Route path="/portafolio"><WorkView /></Route>
+                    <Route path="/about"><About /></Route>
+                    <Route path="/contacto"><Contact /></Route>
+                  </Switch>
+                </AnimatePresence>
+              )
+            }}
+            />
           </section>
         </Router>
         <div ref={footerRef}>
           <Footer />
         </div>
       </section>
-      <Cursor coords={posicion} isClickableHover={clickable}/>
+      <Cursor coords={posicion} hoverType={hoverType}/>
     </section>
   );
 }
 
 export default App;
 
-function Work() {
-  return <h2>Work</h2>
-}
+
+
 function About() {
   return <h2>About</h2>
 }
