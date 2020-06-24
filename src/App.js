@@ -82,7 +82,7 @@ function App() {
                 <AnimatePresence exitBeforeEnter initial={false}>
                   <Switch location={location} key={location.pathname}>
                     <Route exact path="/"><HomeView altura={dynamicStyle.section.height} nombre="Jorge" puesto="Front-end Developer"/></Route>
-                    <Route path="/portafolio"><WorkView /></Route>
+                    <Route path="/portafolio"><WorkView altura={dynamicStyle.section.height} /></Route>
                     <Route path="/about"><About /></Route>
                     <Route path="/contacto"><Contact /></Route>
                   </Switch>
