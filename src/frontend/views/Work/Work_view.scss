@@ -11,8 +11,31 @@
             flex-grow: 1;
             margin-right: 20px;
             color: $blanco;
+            .tag{
+                display: inline-block;
+                margin-bottom: 10px;
+                padding: 3px 10px;
+                color: $blanco;
+                font-size: 12px;
+                border-radius: 20px;
+                background-color: $alterno;
+            }
             .name{
                 font-size: 30px;
+            }
+            .buttons{
+                @include flex($jc: flex-start);
+                margin-top: 30px;
+                .button{
+                    margin-top: 10px;
+                    margin-right: 20px;
+                    padding: 7px 20px;
+                    color: $blanco;
+                    font-size: 12px;
+                    letter-spacing: 2px;
+                    text-transform: uppercase;
+                    background-color: $alterno;
+                }
             }
         }
         .thumbs{

@@ -1,0 +1,59 @@
+@import '../../../resources/scss/vars';
+@import '../../../resources/scss/mixins';
+
+.aboutSection{
+    @include flex;
+    .container{
+        @include container;
+        @include flex;
+        padding: 20px 0;
+        .miniContainer{
+            @include flex($wrp: nowrap);
+            width: 100%;
+            max-width: 1000px;
+            .photoWrap{
+                min-width: 300px;
+                margin-right: 50px;
+                perspective: 1000px;
+                position: relative;
+                &:before{
+                    content: "";
+                    position: absolute;
+                    bottom: -20px;
+                    left: -20px;
+                    width: 500px;
+                    height: 50%;
+                    background-color: rgba($blanco,.1);
+                }
+                .color{
+                    width: 100%;
+                    height: 400px;
+                    background-color: $blanco;
+                    transform: rotateY(-10deg);
+                }
+                .photo{
+                    @include imagen;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    width: 300px;
+                    height: 300px;
+                    margin: auto;
+                }
+            }
+            .texts{
+                position: relative;
+                color: $blanco;
+                .big{
+                    font-size: 35px;
+                    margin-bottom: 30px;
+                }
+                .desc{
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }
+}

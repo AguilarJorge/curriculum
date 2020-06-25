@@ -7,6 +7,7 @@ import './App.css';
 //Views
 import HomeView from './frontend/views/Home/Home_view';
 import WorkView from './frontend/views/Work/Work_view';
+import AboutView from './frontend/views/About/About_view';
 //Components
 import Loader from './frontend/components/Loader/Loader';
 import Header from './frontend/components/Header/Header';
@@ -83,8 +84,8 @@ function App() {
                   <Switch location={location} key={location.pathname}>
                     <Route exact path="/"><HomeView altura={dynamicStyle.section.height} nombre="Jorge" puesto="Front-end Developer"/></Route>
                     <Route path="/portafolio"><WorkView altura={dynamicStyle.section.height} /></Route>
-                    <Route path="/about"><About /></Route>
-                    <Route path="/contacto"><Contact /></Route>
+                    <Route path="/about"><AboutView altura={dynamicStyle.section.height} /></Route>
+                    <Route path="/contacto"><AboutView altura={dynamicStyle.section.height} /></Route>
                   </Switch>
                 </AnimatePresence>
               )
@@ -102,12 +103,3 @@ function App() {
 }
 
 export default App;
-
-
-
-function About() {
-  return <h2>About</h2>
-}
-function Contact() {
-  return <h2>Contact</h2>
-}

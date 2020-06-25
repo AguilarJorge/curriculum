@@ -1,0 +1,18 @@
+@import '../../../../resources/scss/vars';
+@import '../../../../resources/scss/mixins';
+
+.link{
+    color: $blanco;
+    position: relative;
+    display: inline-block;
+    &:before{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background-color: rgba($extra,.5);
+        z-index: -1;
+    }
+}
