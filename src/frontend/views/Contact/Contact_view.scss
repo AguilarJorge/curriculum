@@ -1,0 +1,40 @@
+@import '../../../resources/scss/vars';
+@import '../../../resources/scss/mixins';
+
+.contactSection{
+    @include flex;
+    .container{
+        @include container;
+        @include flex;
+        padding: 20px 0;
+        .miniContainer{
+            @include flex(column, $ai: flex-start);
+            width: 100%;
+            max-width: 800px;
+            color: $blanco;
+            position: relative;
+            perspective: 1000px;
+            &:before{
+                content: "";
+                position: absolute;
+                right: 0;
+                width: 50%;
+                height: 100%;
+                min-height: 400px;
+                transform: rotateY(10deg);
+                background-color: rgba($blanco,.1);
+            }
+            .text{
+                width: 100%;
+                position: relative;
+            }
+            .big{
+                font-size: 60px;
+                margin-bottom: 20px;
+            }
+            .desc{
+                margin-top: 15px;
+            }
+        }
+    }
+}
