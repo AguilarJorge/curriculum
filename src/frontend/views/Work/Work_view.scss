@@ -7,10 +7,22 @@
         @include container;
         @include flex;
         padding: 20px 0;
+        &.oc{
+            .workInfo{
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            .thumbs{
+                opacity: 0;
+                transform: translateX(100px);
+            }
+        }
         .workInfo{
-            flex-grow: 1;
+            width: 100%;
+            max-width: calc(100% - 620px);
             margin-right: 20px;
             color: $blanco;
+            transition: ease all .5s;
             .tag{
                 display: inline-block;
                 margin-bottom: 10px;
@@ -43,6 +55,7 @@
             height: 360px;
             max-width: 600px;
             position: relative;
+            transition: ease all .5s;
             .thumb{
                 position: absolute;
                 bottom: 0;

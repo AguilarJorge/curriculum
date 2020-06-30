@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import './Work_view.css';
 
 function WorkView(props) {
-    const {altura} = props;
+    const {altura, timerSlider} = props;
     const [works, setWorks] = useState([]);
     const [current, setCurrent] = useState(null);
+    const [pxSlider, setPxSlider] = useState(0);
+    const refContainer = useRef();
     
     useEffect(() => {
         let workStorage = sessionStorage.getItem('works');
@@ -19,6 +21,18 @@ function WorkView(props) {
     useEffect(() => {
         sessionStorage.setItem('works', JSON.stringify(works))
     }, [works])
+    useEffect(() => {
+        let timer = setTimeout(() => {
+            if (refContainer.current) refContainer.current.classList.add('oc');
+            setTimeout(() => {
+                if (refContainer.current) refContainer.current.classList.remove('oc');
+                let update = pxSlider === (works.length - 1) ? 0 : pxSlider + 1;
+                setPxSlider(update);
+                setCurrent(works[update]);
+            }, 500)
+        }, timerSlider)
+        return () => clearTimeout(timer);
+    }, [works, current, pxSlider, timerSlider])
 
     const getData = async () => {
         const result = await fetch('/api/curriculum/v1/data/trabajos');
@@ -26,7 +40,6 @@ function WorkView(props) {
         setWorks(datos);
         setCurrent(datos[0]);
     }
-
 
     //Motion Anim
     const animVariants = {
@@ -107,7 +120,7 @@ function WorkView(props) {
 
     return !current ? 'Cargando' : (
         <motion.section className="workSection" style={{minHeight: altura}} initial="init" animate="enter" exit="exit">
-            <div className="container">
+            <div className="container" ref={refContainer}>
                 <div className="workInfo">
                     <motion.div className="tag isClickable" custom={.9} variants={animVariants.scale}>{current.categoria}</motion.div>
                     <motion.h1 className="name" custom={.5} variants={animVariants.fromRight}>{current.nombre}</motion.h1>
