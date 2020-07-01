@@ -7,7 +7,15 @@ function WorkView(props) {
     const [works, setWorks] = useState([]);
     const [current, setCurrent] = useState(null);
     const [pxSlider, setPxSlider] = useState(0);
-    const refContainer = useRef();
+    const [transformWrap, setTransformWrap] = useState(0);
+    const refWrapper = useRef();
+
+    const getData = async () => {
+        const result = await fetch('/api/curriculum/v1/data/trabajos');
+        const datos = await result.json();
+        setWorks(datos);
+        setCurrent(datos[0]);
+    }
     
     useEffect(() => {
         let workStorage = sessionStorage.getItem('works');
@@ -19,27 +27,33 @@ function WorkView(props) {
         }
     }, [])
     useEffect(() => {
+        // var x = works.concat(works);
         sessionStorage.setItem('works', JSON.stringify(works))
+        setTransformWrap(`calc(50% - 45px)`);
+
     }, [works])
+
     useEffect(() => {
         let timer = setTimeout(() => {
-            if (refContainer.current) refContainer.current.classList.add('oc');
             setTimeout(() => {
-                if (refContainer.current) refContainer.current.classList.remove('oc');
                 let update = pxSlider === (works.length - 1) ? 0 : pxSlider + 1;
                 setPxSlider(update);
                 setCurrent(works[update]);
+                setTransformWrap(`calc(50% - 45px - (60px * ${update}))`);
+                document.querySelector('.wrapper .wrk.active').classList.remove('active');
+                let prev = document.querySelector('.wrapper .wrk.prev');
+                if (prev) prev.classList.remove('prev');
+                let next = document.querySelector('.wrapper .wrk.next');
+                if (next) next.classList.remove('next');
+                refWrapper.current.children[update].classList.add('active');                
+                if (refWrapper.current.children[update].previousElementSibling) refWrapper.current.children[update].previousElementSibling.classList.add('prev');
+                if (refWrapper.current.children[update].nextElementSibling) refWrapper.current.children[update].nextElementSibling.classList.add('next');
             }, 500)
         }, timerSlider)
         return () => clearTimeout(timer);
     }, [works, current, pxSlider, timerSlider])
 
-    const getData = async () => {
-        const result = await fetch('/api/curriculum/v1/data/trabajos');
-        const datos = await result.json();
-        setWorks(datos);
-        setCurrent(datos[0]);
-    }
+
 
     //Motion Anim
     const animVariants = {
@@ -120,17 +134,8 @@ function WorkView(props) {
 
     return !current ? 'Cargando' : (
         <motion.section className="workSection" style={{minHeight: altura}} initial="init" animate="enter" exit="exit">
-            <div className="container" ref={refContainer}>
-                <div className="workInfo">
-                    <motion.div className="tag isClickable" custom={.9} variants={animVariants.scale}>{current.categoria}</motion.div>
-                    <motion.h1 className="name" custom={.5} variants={animVariants.fromRight}>{current.nombre}</motion.h1>
-                    <motion.p className="desc" custom={.7} variants={animVariants.fromRight}>{current.descripcion}</motion.p>
-                    <div className="buttons">
-                        <motion.div className="button info isClickable" custom={1.1} variants={animVariants.fromLeft}>Ver detalles</motion.div>
-                        {current.url && <motion.a className="button link isExternaLink" custom={1.3} variants={animVariants.fromLeft} href={current.url} target="_blank" rel="noopener noreferrer">Visitar sitio</motion.a>}
-                    </div>
-                </div>
-                <div className="thumbs">
+            <div className="container">
+            <div className="thumbs">
                     <motion.div className="thumb laptop" custom={1.5} variants={animVariants.fromBottom}>
                         <div className="thumbImg" style={{backgroundImage: `url(${current.laptop_thumb})`}}></div>
                         <div className="frame" style={{backgroundImage: `url(${require('../../../resources/img/mockups/laptop.png')})`}} />
@@ -143,6 +148,19 @@ function WorkView(props) {
                         <div className="thumbImg" style={{backgroundImage: `url(${current.mobile_thumb})`}}></div>
                         <div className="frame" style={{backgroundImage: `url(${require('../../../resources/img/mockups/phone.png')})`}} />
                     </motion.div>
+                </div>
+                <div className="workList">
+                    <div className="wrapper" ref={refWrapper} style={{transform: `translateY(${transformWrap})`}}>
+                        {
+                            works.map((wk, k) => (
+                                <li key={k} className={`wrk${(works && k === 0) ? ' active':''}`}>
+                                    <div className="wrkName">
+                                        <span className="num">{k < 9 ? `0${k + 1}` : k + 1}</span>
+                                        {wk.nombre}</div>
+                                </li>
+                            ))
+                        }
+                    </div>
                 </div>
             </div>
         </motion.section>

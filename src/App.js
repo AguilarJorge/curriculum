@@ -84,7 +84,7 @@ function App() {
                 <AnimatePresence exitBeforeEnter initial={false}>
                   <Switch location={location} key={location.pathname}>
                     <Route exact path="/"><HomeView altura={dynamicStyle.section.height} nombre="Jorge" puesto="Front-end Developer"/></Route>
-                    <Route path="/portafolio"><WorkView altura={dynamicStyle.section.height} timerSlider="10000" /></Route>
+                    <Route path="/portafolio"><WorkView altura={dynamicStyle.section.height} timerSlider="5000" /></Route>
                     <Route path="/about"><AboutView altura={dynamicStyle.section.height} /></Route>
                     <Route path="/contacto"><ContactView altura={dynamicStyle.section.height} /></Route>
                   </Switch>
