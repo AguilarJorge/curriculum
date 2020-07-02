@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import './Work_view.css';
+import DeviceFrame from '../../components/elements/DeviceFrame/DeviceFrame';
 
 function WorkView(props) {
     const {altura, timerSlider} = props;
@@ -9,6 +10,27 @@ function WorkView(props) {
     const [pxSlider, setPxSlider] = useState(0);
     const [transformWrap, setTransformWrap] = useState(0);
     const refWrapper = useRef();
+    const refThumbs = useRef();
+    const thumbFrames = [
+        {
+            clase: 'laptop',
+            thumbStr: 'laptop_thumb',
+            frame: require('../../../resources/img/mockups/laptop.png'),
+            customTime: '1.5'
+        },
+        {
+            clase: 'tablet',
+            thumbStr: 'tablet_thumb',
+            frame: require('../../../resources/img/mockups/tablet.png'),
+            customTime: '1.7'
+        },
+        {
+            clase: 'phone',
+            thumbStr: 'mobile_thumb',
+            frame: require('../../../resources/img/mockups/phone.png'),
+            customTime: '1.9'
+        }
+    ]
 
     const getData = async () => {
         const result = await fetch('/api/curriculum/v1/data/trabajos');
@@ -27,7 +49,6 @@ function WorkView(props) {
         }
     }, [])
     useEffect(() => {
-        // var x = works.concat(works);
         sessionStorage.setItem('works', JSON.stringify(works))
         setTransformWrap(`calc(50% - 45px)`);
 
@@ -35,6 +56,7 @@ function WorkView(props) {
 
     useEffect(() => {
         let timer = setTimeout(() => {
+            refThumbs.current.classList.add('animTrans');
             setTimeout(() => {
                 let update = pxSlider === (works.length - 1) ? 0 : pxSlider + 1;
                 setPxSlider(update);
@@ -48,6 +70,7 @@ function WorkView(props) {
                 refWrapper.current.children[update].classList.add('active');                
                 if (refWrapper.current.children[update].previousElementSibling) refWrapper.current.children[update].previousElementSibling.classList.add('prev');
                 if (refWrapper.current.children[update].nextElementSibling) refWrapper.current.children[update].nextElementSibling.classList.add('next');
+                refThumbs.current.classList.remove('animTrans');
             }, 500)
         }, timerSlider)
         return () => clearTimeout(timer);
@@ -135,19 +158,12 @@ function WorkView(props) {
     return !current ? 'Cargando' : (
         <motion.section className="workSection" style={{minHeight: altura}} initial="init" animate="enter" exit="exit">
             <div className="container">
-            <div className="thumbs">
-                    <motion.div className="thumb laptop" custom={1.5} variants={animVariants.fromBottom}>
-                        <div className="thumbImg" style={{backgroundImage: `url(${current.laptop_thumb})`}}></div>
-                        <div className="frame" style={{backgroundImage: `url(${require('../../../resources/img/mockups/laptop.png')})`}} />
-                    </motion.div>
-                    <motion.div className="thumb tablet" custom={1.7} variants={animVariants.fromBottom}>
-                        <div className="thumbImg" style={{backgroundImage: `url(${current.tablet_thumb})`}}></div>
-                        <div className="frame" style={{backgroundImage: `url(${require('../../../resources/img/mockups/tablet.png')})`}} />
-                    </motion.div>
-                    <motion.div className="thumb phone" custom={1.9} variants={animVariants.fromBottom}>
-                        <div className="thumbImg" style={{backgroundImage: `url(${current.mobile_thumb})`}}></div>
-                        <div className="frame" style={{backgroundImage: `url(${require('../../../resources/img/mockups/phone.png')})`}} />
-                    </motion.div>
+                <div className="thumbs" ref={refThumbs}>
+                    {
+                        thumbFrames.map((device, k) => (
+                            <DeviceFrame key={k} extraClass={device.clase} thumbImg={current[device.thumbStr]} frameImg={device.frame} customAnim={device.customTime} variantsAnim={animVariants.fromBottom} />
+                        ))
+                    }
                 </div>
                 <div className="workList">
                     <div className="wrapper" ref={refWrapper} style={{transform: `translateY(${transformWrap})`}}>

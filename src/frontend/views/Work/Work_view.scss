@@ -35,7 +35,7 @@
                 .wrk{
                     @include flex($jc: flex-start);
                     height: 60px;
-                    font-size: 25px;
+                    font-size: 20px;
                     font-weight: 600;
                     opacity: .1;
                     transition: ease all .5s;
@@ -51,6 +51,10 @@
                                 }
                             }
                         }
+                    }
+                    &.prev, &.next{
+                        opacity: .3;
+                        font-size: 30px;
                     }
                     .wrkName{
                         @include flex;
@@ -78,7 +82,24 @@
             right: 0;
             width: 600px;
             height: 360px;
-            transition: ease all .5s;
+            &:after{
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: auto;
+                width: 0;
+                height: 100%;
+                background-color: $blanco;
+                transition: ease all .5s;
+            }
+            &.animTrans{
+                &:after{
+                    right: 0;
+                    left: auto;
+                    width: 100%;
+                }
+            }
             .thumb{
                 position: absolute;
                 bottom: 0;
@@ -126,7 +147,6 @@
                     left: 0;
                     right: 0;
                     margin: auto;
-                    transition: ease all .5s;
                 }
             }
         }
