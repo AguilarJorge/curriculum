@@ -103,6 +103,30 @@
                         width: 100%;
                     }
                 }
+                .cpa{
+                    position: fixed;
+                    top: 0;
+                    right: 0;
+                    width: 500px;
+                    height: 100%;
+                    z-index: $zup;
+                    transition: ease background-color .5s;
+                    .link{
+                        @include flex($jc: flex-start);
+                        width: 100%;
+                        height: 100%;
+                        color: $blanco;
+                        font-size: 25px;
+                        font-weight: 600;
+                        &:before{
+                            content: "";
+                            width: 100px;
+                            height: 5px;
+                            margin-right: 10px;
+                            background-color: $blanco;
+                        }
+                    }
+                }
                 .thumb{
                     position: absolute;
                     bottom: 0;
@@ -158,6 +182,8 @@
                 width: 100%;
                 margin-top: 20px;
                 color: $blanco;
+                position: relative;
+                z-index: $zup;
                 .progressBar{
                     @include flex;
                     width: calc(100% - 140px);
@@ -193,6 +219,7 @@
                     @include flex;
                     .workButton{
                         margin-left: 20px;
+                        transition: ease all .5s;
                         &:hover{
                             background-color: rgba($blanco,.1);
                         }

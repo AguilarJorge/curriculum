@@ -8,10 +8,6 @@
     border-radius: 50%;
     border: 2px solid $blanco;
     position: relative;
-    transition: ease all .5s;
-    &:hover{
-        transform: translateY(-5px)
-    }
     .icon{
         @include imagen;
         width: 50%;

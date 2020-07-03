@@ -4,6 +4,8 @@
 .mainHeader{
     width: 100%;
     margin: 0 auto;
+    position: relative;
+    z-index: $zmenu;
     .container{
         @include container;
         @include flex(row, $jc: space-between);
