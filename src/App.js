@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
 import './App.css';
@@ -9,7 +9,7 @@ import HomeView from './frontend/views/Home/Home_view';
 import WorkView from './frontend/views/Work/Work_view';
 import AboutView from './frontend/views/About/About_view';
 import ContactView from './frontend/views/Contact/Contact_view';
-import Generic404 from './frontend/views/404/Generic/Generic';
+import Generic from './frontend/views/404/Generic/Generic';
 //Components
 import Loader from './frontend/components/Loader/Loader';
 import Header from './frontend/components/Header/Header';
@@ -90,8 +90,7 @@ function App() {
                     <Route exact path="/portafolio"><WorkView altura={dynamicStyle.section.height} timerSlider="5000" /></Route>
                     <Route path="/about"><AboutView altura={dynamicStyle.section.height} /></Route>
                     <Route path="/contacto"><ContactView altura={dynamicStyle.section.height} /></Route>
-                    <Route path="/404"><Generic404 altura={dynamicStyle.section.height} /></Route>
-                    <Redirect to="/404" />
+                    <Route><Generic altura={dynamicStyle.section.height} /></Route>
                   </Switch>
                 </AnimatePresence>
               )

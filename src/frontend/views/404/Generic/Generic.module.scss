@@ -1,0 +1,37 @@
+@import '../../../../resources/scss/vars';
+@import '../../../../resources/scss/mixins';
+
+.container{
+    @include container;
+    .code{
+        width: fit-content;
+        margin: auto;
+        font-size: 35px;
+        color: $blanco;
+        .ident1{
+            margin-left: 50px;
+        }
+        .comment{
+            color: #005d00;
+        }
+        .jsfx{
+            color: #ad21ad;
+        }
+        .args{
+            color: #82d6d6;
+        }
+        .string{
+            color: #9c5002;
+        }
+    }
+    .actions{
+        @include flex(row, nowrap, flex-start);
+        font-size: 18px;
+        margin-top: 30px;
+        .link{
+            color: $blanco;
+            font-style: italic;
+            border-bottom: 1px solid;
+        }
+    }
+}

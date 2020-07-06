@@ -97,44 +97,51 @@ function WorkView(props) {
     }, [works])
 
     useEffect(() => {
-        let timer = setTimeout(() => {
+        let interval = setInterval(() => {
             let updatePos = pxSlider === (works.length - 1) ? 0 : pxSlider + 1;
             animationSlider(updatePos);
         }, timerSlider)
-        return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        let timeout = setTimeout(() => {
+            refThumbs.current.classList.add('animTrans');
+        }, timerSlider - 500);
+        return () => {
+            clearInterval(interval);
+            clearTimeout(timeout);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [works, current, pxSlider, timerSlider])
     
     const animationSlider = update => {
-        refThumbs.current.classList.add('animTrans');
-        setTimeout(() => {
-            setPxSlider(update);
-            setCurrent(works[update]);
-            setTransformWrap(`calc(50% - 45px - (60px * ${update}))`);
-            let activ = document.querySelector('.wrapper .wrk.active');
-            if (activ) {
-                activ.classList.remove('active');
-            } else {
-                return false;
-            }
-            let prev = document.querySelector('.wrapper .wrk.prev');
-            if (prev) prev.classList.remove('prev');
-            let next = document.querySelector('.wrapper .wrk.next');
-            if (next) next.classList.remove('next');
-            refWrapper.current.children[update].classList.add('active');                
-            if (refWrapper.current.children[update].previousElementSibling) refWrapper.current.children[update].previousElementSibling.classList.add('prev');
-            if (refWrapper.current.children[update].nextElementSibling) refWrapper.current.children[update].nextElementSibling.classList.add('next');
-            refThumbs.current.classList.remove('animTrans');
-        }, 500)
+        refThumbs.current.classList.remove('animTrans');
+        setPxSlider(update);
+        setCurrent(works[update]);
+        setTransformWrap(`calc(50% - 45px - (60px * ${update}))`);
+        let activ = document.querySelector('.wrapper .wrk.active');
+        if (activ) {
+            activ.classList.remove('active');
+        } else {
+            return false;
+        }
+        let prev = document.querySelector('.wrapper .wrk.prev');
+        if (prev) prev.classList.remove('prev');
+        let next = document.querySelector('.wrapper .wrk.next');
+        if (next) next.classList.remove('next');
+        refWrapper.current.children[update].classList.add('active');                
+        if (refWrapper.current.children[update].previousElementSibling) refWrapper.current.children[update].previousElementSibling.classList.add('prev');
+        if (refWrapper.current.children[update].nextElementSibling) refWrapper.current.children[update].nextElementSibling.classList.add('next');
     }
     const updates = increment => {
-        var update;
-        if (increment === '+') {
-            update = pxSlider === (works.length - 1) ? 0 : pxSlider + 1;
-        } else {
-            update = pxSlider === 0 ? works.length - 1 : pxSlider - 1;
+        if (typeof(increment) === 'string') {
+            if (increment === '+') {
+                increment = pxSlider === (works.length - 1) ? 0 : pxSlider + 1;
+            } else {
+                increment = pxSlider === 0 ? works.length - 1 : pxSlider - 1;
+            }
         }
-        animationSlider(update);
+        refThumbs.current.classList.add('animTrans');
+        setTimeout(() => {
+            animationSlider(increment);
+        }, 500);
     }
     const hexToRgb = (hexColor) => {
         let shortRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -176,8 +183,8 @@ function WorkView(props) {
                     <ul className="wrapper" ref={refWrapper} style={{transform: `translateY(${transformWrap})`}}>
                         {
                             works.map((wk, k) => (
-                                <li key={k} className={`wrk${(works && k === 0) ? ' active':''}`}>
-                                    <div className="wrkName">
+                                <li key={k} className={`wrk${(works && k === 0) ? ' active':''}`} onClick={() => updates(k)}>
+                                    <div className="wrkName isClickable">
                                         <span className="num">{k < 9 ? `0${k + 1}` : k + 1}</span>
                                         {wk.nombre_corto}</div>
                                 </li>

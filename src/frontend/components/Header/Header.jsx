@@ -19,15 +19,18 @@ function Header(props) {
             setIsHome(true);
         } else {
             setIsHome(false);
-            let links = document.querySelectorAll('.link');
-            links.forEach(link => {
-                if (link.pathname === location.pathname) {
+            let links = document.querySelectorAll('.mainHeader .link');
+            for (let index = 0; index < links.length; index++) {
+                if (links[index].pathname === location.pathname) {
                     setEstilo({
-                        width: link.getBoundingClientRect().width,
-                        left: link.offsetLeft
+                        width: links[index].getBoundingClientRect().width,
+                        left: links[index].offsetLeft
                     })
+                    break;
+                } else {
+                    setEstilo({width: 0})
                 }
-            });
+            }
         }
     }, [location])
 
