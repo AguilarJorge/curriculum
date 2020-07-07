@@ -84,7 +84,7 @@ function WorkView(props) {
     
     useEffect(() => {
         let workStorage = sessionStorage.getItem('works');
-        if (workStorage != null) {
+        if (workStorage != null && JSON.parse(workStorage).length > 0) {
             setWorks(JSON.parse(workStorage))
             setCurrent(JSON.parse(workStorage)[0])
         }else {
@@ -153,7 +153,7 @@ function WorkView(props) {
         return execRegex ? rgb.join() : null;
     }
 
-    return !current ? 'Cargando' : (
+    return !current ? 'cargando' : (
         <motion.section className="workSection" style={{minHeight: altura}} initial="init" animate="enter" exit="exit">
             <div className="container">
                 <div className="thumbSide">
@@ -161,7 +161,7 @@ function WorkView(props) {
                         <AnimatePresence>
                             {showLink && (
                                 <motion.div initial={{x: '100%', opacity: 0}} animate={{x: 0, opacity: 1}} exit={{x: '100%', opacity: 0}} className="cpa" style={{backgroundColor: `rgba(${hexToRgb(current.color_theme || '#000')},.5)`}}>
-                                    <Link to={`/portafolio/${current.id}`} className="link isInternaLink">Ver Proyecto</Link>
+                                    <Link to={`/portafolio/${current.id}`} className="link isInternaLink" data={current}>Ver Proyecto</Link>
                                 </motion.div>
                             )}
                         </AnimatePresence>

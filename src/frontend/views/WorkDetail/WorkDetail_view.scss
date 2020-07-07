@@ -1,0 +1,59 @@
+@import '../../../resources/scss/vars';
+@import '../../../resources/scss/mixins';
+
+.workDetailSection{
+    .container{
+        @include container;
+        .title{
+            color: $blanco;
+            font-size: 40px;
+            font-weight: 600;
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .contentWrap{
+            @include flex($wrp: nowrap);
+            height: 520px;
+            .infoSide{
+                transform: rotateY(180deg);
+                max-height: 100%;
+                overflow: auto;
+                .info{
+                    transform: rotateY(180deg);
+                    color: $blanco;
+                }
+            }
+            .phone {
+                @include flex(column, nowrap);
+                min-width: 260px;
+                height: 520px;
+                margin-left: 20px;
+                border-radius: 20px;
+                border: 2px solid #ccc;
+                background-color: $blanco;
+                position: relative;
+                .speaker {
+                    width: 50px;
+                    min-height: 6px;
+                    margin: 20px auto;
+                    border: 1px solid #ccc;
+                    border-radius: 6px;
+                }
+                .screen {
+                    flex-grow: 1;
+                    width: 95%;
+                    border: 1px solid #ccc;
+                    overflow: auto;
+                }
+                .home {
+                    width: 35px;
+                    min-height: 35px;
+                    margin: 10px auto;
+                    border-radius: 50%;
+                    border: 1px solid #ccc;
+                }
+            }
+        }
+    }
+}
+

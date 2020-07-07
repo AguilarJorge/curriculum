@@ -7,6 +7,7 @@ import './App.css';
 //Views
 import HomeView from './frontend/views/Home/Home_view';
 import WorkView from './frontend/views/Work/Work_view';
+import WorkDetailView from './frontend/views/WorkDetail/WorkDetail_view';
 import AboutView from './frontend/views/About/About_view';
 import ContactView from './frontend/views/Contact/Contact_view';
 import Generic from './frontend/views/404/Generic/Generic';
@@ -88,6 +89,7 @@ function App() {
                   <Switch location={location} key={location.pathname}>
                     <Route exact path="/"><HomeView altura={dynamicStyle.section.height} nombre="Jorge" puesto="Front-end Developer"/></Route>
                     <Route exact path="/portafolio"><WorkView altura={dynamicStyle.section.height} timerSlider="5000" /></Route>
+                    <Route exact path="/portafolio/:id"><WorkDetailView altura={dynamicStyle.section.height} /></Route>
                     <Route path="/about"><AboutView altura={dynamicStyle.section.height} /></Route>
                     <Route path="/contacto"><ContactView altura={dynamicStyle.section.height} /></Route>
                     <Route><Generic altura={dynamicStyle.section.height} /></Route>
