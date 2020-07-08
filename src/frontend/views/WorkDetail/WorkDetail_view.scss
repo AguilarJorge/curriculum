@@ -12,21 +12,33 @@
             padding-bottom: 20px;
         }
         .contentWrap{
-            @include flex($wrp: nowrap);
+            @include flex($wrp: nowrap, $ai: stretch);
             height: 520px;
             .infoSide{
-                transform: rotateY(180deg);
+                width: calc(100% - 280px);
                 max-height: 100%;
+                transform: rotateY(180deg);
                 overflow: auto;
                 .info{
+                    @include flex($jc: space-between);
                     transform: rotateY(180deg);
                     color: $blanco;
+                    .decoInf{
+                        font-size: 14px;
+                        letter-spacing: 1px;
+                        text-transform: uppercase;
+                        text-decoration: underline wavy;
+                    }
+                    .descripcion{
+                        margin-top: 30px;
+                    }
                 }
             }
             .phone {
                 @include flex(column, nowrap);
-                min-width: 260px;
+                width: 260px;
                 height: 520px;
+                min-width: 260px;
                 margin-left: 20px;
                 border-radius: 20px;
                 border: 2px solid #ccc;
@@ -40,10 +52,15 @@
                     border-radius: 6px;
                 }
                 .screen {
+                    @include scrollbars(0);
+                    scrollbar-width: none;
                     flex-grow: 1;
                     width: 95%;
                     border: 1px solid #ccc;
                     overflow: auto;
+                    .webPage{
+                        width: 100%;
+                    }
                 }
                 .home {
                     width: 35px;

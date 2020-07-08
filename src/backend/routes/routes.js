@@ -33,14 +33,13 @@ const router = app => {
                 t.nombre,
                 t.descripcion,
                 t.url,
-                t.mobile_thumb,
-                t.tablet_thumb,
-                t.laptop_thumb,
                 t.color_theme,
+                mt.url AS mobile_thumb,
                 c.nombre AS categoria,
                 e.nombre AS empresa
             FROM trabajo AS t
             INNER JOIN categoria AS c ON t.id_categoria = c.id 
+            INNER JOIN mobile_thumbs AS mt ON t.id_mobile_thumb = mt.id 
             INNER JOIN empresa AS e ON t.id_empresa = e.id
             WHERE t.id = ?;
         `;

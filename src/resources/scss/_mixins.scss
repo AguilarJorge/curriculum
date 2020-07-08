@@ -21,6 +21,19 @@
     background-position: $posicion;
     background-repeat: $repeat;
 }
+@mixin scrollbars($size: 3px, $foreground-color: rgba(#000,.5), $background-color: mix($foreground-color, #fff, 50%)) {
+    &::-webkit-scrollbar {
+        width:  $size;
+        height: $size;
+        background: $background-color;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $foreground-color;
+    }
+    &::-webkit-scrollbar-track {
+        background: $background-color;
+    }
+}
 
 
 @mixin pantalla {
